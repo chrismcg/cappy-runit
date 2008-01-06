@@ -9,7 +9,7 @@ end
 # use before running a command
 module RunitHelper
   def run_or_sudo(command)
-    if self.current_task && self.runit_sudo_tasks.include?(self.current_task.name)
+    if configuration.runit_sudo_tasks.include? configuration.actor.current_task.name
       sudo command
     else
       run command

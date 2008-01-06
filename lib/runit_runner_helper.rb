@@ -4,7 +4,6 @@ rescue LoadError
   require 'rubygems'
   require 'capistrano'
 end
-require 'erb'
 
 # This module provides methods to ease creating run scripts in service directories.
 #
@@ -38,12 +37,8 @@ module RunitRunnerHelper
     options.delete(:log_runner)
     
     options = add_default_options(options)
-    b = Proc.new { binding }.call
-    options.each do |key, value|
-      next if key == :template
-      eval "#{key} = options[:#{key}]", b
-    end
-    runner = ERB.new(get_template(template)).result(b)
+
+    runner = render options.merge(:template => get_template(template))
 
     put runner, path, :mode => 0700    
   end  
@@ -63,7 +58,7 @@ module RunitRunnerHelper
       template
     else
       [ ".",
-        self.runner_template_path,
+        configuration.runner_template_path,
         File.join(File.dirname(__FILE__), 'capistrano-runit-tasks-templates')
       ].each do |dir|
         if File.file?(File.join(dir, template))
@@ -79,7 +74,7 @@ module RunitRunnerHelper
   
   protected
   def add_default_options(options)
-    {:deploy_to => self.deploy_to}.merge(options)
+    {:deploy_to => configuration.deploy_to}.merge(options)
   end
 end
 

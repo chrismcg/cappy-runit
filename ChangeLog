@@ -1,0 +1,30 @@
+*SVN* 
+--------------------------------------------------
+
+* Add runit_sudo_tasks variable, array of symbols indicating tasks names to be
+  run using sudo.
+
+* Added support for mongrel, and basic mongrel runner template
+
+* Changed fcgi_port and fcgi_listener_base_port to listener_port and
+  listener_base_port. Old variable names still supported but considered
+  deprecated.
+
+*0.2.0* (March 23rd 2006)
+--------------------------------------------------
+
+* Added RunitServiceHelper which adds service.add to allow easy creation of
+  services. Refactored other code to use new functionality.
+
+* Made runner.create handle file based templates, changed it's API slightly
+
+* Added RunitCommandHelper, which adds an sv command to send signals to
+  services e.g. sv.up. Can set :sv_command to :sv or :runsvctrl to choose
+  which binary to run on there server
+
+* Changed default master_service_dir to ~/service to match the defendem.com
+  instructions
+
+* Changed default fcgi_listener_base_port to 9000
+
+* Added tests for 0.1.0

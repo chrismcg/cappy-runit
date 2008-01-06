@@ -1,0 +1,3 @@
+#!/bin/sh -e
+export RAILS_ENV=production
+exec 2>&1  /usr/bin/env spawn-fcgi -n -f <%= deploy_to %>/current/public/dispatch.fcgi -p <%= listener_port %>

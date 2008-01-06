@@ -1,0 +1,2 @@
+#!/bin/sh -e
+exec 2>&1  /usr/bin/env mongrel_rails start --environment production --port <%= listener_port %> --address 127.0.0.1 --chdir <%= deploy_to %>/current --log <%= deploy_to %>/shared/log/mongrel.log --pid <%= deploy_to %>/shared/log/mongrel.pid

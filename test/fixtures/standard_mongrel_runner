@@ -1,0 +1,2 @@
+#!/bin/sh -e
+exec 2>&1  /usr/bin/env mongrel_rails start --environment production --port 8000 --address 127.0.0.1 --chdir app_dir/current --log app_dir/shared/log/mongrel.log --pid app_dir/shared/log/mongrel.pid

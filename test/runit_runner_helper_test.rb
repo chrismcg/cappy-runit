@@ -1,13 +1,13 @@
 require 'test_helper'
 
 class RunitRunnerHelperTest < Test::Unit::TestCase
-  include TestHelper
-  
   def setup
-    @actor = TestActor.new(MockConfiguration.new)    
-    @actor.configuration.set :runner_template_path, File.join(File.dirname(__FILE__), 'templates')
-    @actor.configuration.set :deploy_to, 'app_dir'
-    @actor.configuration.set :runit_sudo_tasks, []
+    @config = Capistrano::Configuration.new
+    @config.load do
+      set :runner_template_path, File.join(File.dirname(__FILE__), 'templates')
+      set :deploy_to, 'app_dir'
+      set :runit_sudo_tasks, []
+    end
   end
   
   def test_should_load_runit_runner_helper
@@ -15,39 +15,44 @@ class RunitRunnerHelperTest < Test::Unit::TestCase
   end
   
   def test_should_create_default_fcgi_runner
-    @actor.runner.create 'test/output', :fcgi, :listener_port => 8000
-    assert_equal File.read("#{File.dirname(__FILE__)}/fixtures/standard_fcgi_runner"), @actor.put_data['test/output/run']
+    expected = File.read("#{File.dirname(__FILE__)}/fixtures/standard_fcgi_runner")
+    @config.expects(:put).with(expected, 'test/output/run', :mode => 0700)
+    @config.runner.create 'test/output', :fcgi, :listener_port => 8000
   end
 
   def test_should_create_default_mongrel_runner
-    @actor.runner.create 'test/output', :mongrel, :listener_port => 8000
-    assert_equal File.read("#{File.dirname(__FILE__)}/fixtures/standard_mongrel_runner"), @actor.put_data['test/output/run']
+    expected = File.read("#{File.dirname(__FILE__)}/fixtures/standard_mongrel_runner")
+    @config.expects(:put).with(expected, 'test/output/run', :mode => 0700)
+    @config.runner.create 'test/output', :mongrel, :listener_port => 8000
   end
   
   def test_should_create_custom_runner
     custom_runner = "<%= foo %>"
-    @actor.runner.create 'test/output', custom_runner, :foo => 'bar'
-    assert_equal 'bar', @actor.put_data['test/output/run']
+    @config.expects(:put).with("bar", 'test/output/run', :mode => 0700)
+    @config.runner.create 'test/output', custom_runner, :foo => 'bar'
   end
 
   def test_should_create_log_runner
-    @actor.runner.create 'test/output', :log
-    assert_equal File.read("#{File.dirname(__FILE__)}/fixtures/log_runner"), @actor.put_data['test/output/log/run']
+    expected = File.read("#{File.dirname(__FILE__)}/fixtures/log_runner")
+    @config.expects(:put).with(expected, 'test/output/log/run', :mode => 0700)
+    @config.runner.create 'test/output', :log
   end
   
   def test_should_create_custom_log_runnner
     custom_runner = "<%= foo %>"
-    @actor.runner.create 'test/output', custom_runner, :log_runner => true, :foo => 'bar'
-    assert_equal 'bar', @actor.put_data['test/output/log/run']    
+    @config.expects(:put).with('bar', 'test/output/log/run', :mode => 0700)
+    @config.runner.create 'test/output', custom_runner, :log_runner => true, :foo => 'bar'
   end
   
   def test_should_create_runner_from_file_template
-    @actor.runner.create 'test/output', 'test_runner', :listener_port => 8000
-    assert_equal File.read("#{File.dirname(__FILE__)}/fixtures/standard_fcgi_runner"), @actor.put_data['test/output/run']
+    expected = File.read("#{File.dirname(__FILE__)}/fixtures/standard_fcgi_runner")
+    @config.expects(:put).with(expected, 'test/output/run', :mode => 0700)
+    @config.runner.create 'test/output', 'test_runner', :listener_port => 8000
   end
 
   def test_should_create_log_runner_from_log_file_template
-    @actor.runner.create 'test/output', 'test_log_runner', :log_runner => true
-    assert_equal File.read("#{File.dirname(__FILE__)}/fixtures/log_runner"), @actor.put_data['test/output/log/run']
+    expected = File.read("#{File.dirname(__FILE__)}/fixtures/log_runner")
+    @config.expects(:put).with(expected, 'test/output/log/run', :mode => 0700)
+    @config.runner.create 'test/output', 'test_log_runner', :log_runner => true
   end
 end

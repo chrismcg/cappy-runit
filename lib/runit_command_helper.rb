@@ -38,13 +38,13 @@ module RunitCommandHelper
 
   protected
   def get_command(signal, cmd)
-    case configuration.sv_command
+    case self.sv_command
       when :sv
         "sv #{cmd}"
       when :runsvctrl
         signal == 'status' ? 'runsvstat' : "runsvctrl #{cmd}"
       else
-        raise "Error: sv_command setting of #{configuration.sv_command} is unsupported"
+        raise "Error: sv_command setting of #{self.sv_command} is unsupported"
     end
   end  
 end

@@ -9,25 +9,14 @@ rescue LoadError
 end
 
 class CappyRunitTasksConfigurationTest < Test::Unit::TestCase
-  class MockActor
-    attr_reader :tasks
-
-    def initialize(config)
-    end
-
-    def define_task(*args, &block)
-      (@tasks ||= []).push [args, block].flatten
-    end
-  end
-
   def setup
-    @config = Capistrano::Configuration.new(MockActor)
+    @config = Capistrano::Configuration.new
     file = File.dirname(__FILE__) + "/fixtures/runit_config.rb"
     @config.load file
   end  
 
   def test_should_include_capistrano_runit_tasks
-    assert task_names(@config.actor.tasks).include?(:setup_service_dirs)
+    assert_not_nil @config.find_task("deploy:setup_service_dirs")
   end
   
   def task_names(tasks)

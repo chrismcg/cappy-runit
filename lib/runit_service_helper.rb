@@ -31,8 +31,8 @@ module RunitServiceHelper
 
   # Returns the full path to the service directory given a service name.
   # Doesn't check the service name is valid.
-  def service_dir(service_name)
-    "#{configuration.deploy_to}/#{configuration.service_dir}/#{service_name}"
+  def service_path(service_name)
+    "#{self.deploy_to}/#{self.service_dir}/#{service_name}"
   end
   
   protected
@@ -52,11 +52,11 @@ module RunitServiceHelper
       runner_template = options[:template]
     end
     options.delete(:template)
-    runner.create service_dir(service_name), runner_template, options
+    runner.create service_path(service_name), runner_template, options
   end
 
   def make_service_dir(service_name)
-    runit_helper.run_or_sudo "mkdir -p #{service_dir(service_name)}/log/main"
+    runit_helper.run_or_sudo "mkdir -p #{service_path(service_name)}/log/main"
   end
 end
 

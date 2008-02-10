@@ -5,21 +5,13 @@ Adds tasks to Capistrano for use with the runit supervision scheme.
 This library extends Capistrano to allow processes to be supervised using the
 runit package. It replaces some of the standard tasks with runit versions and
 includes tasks and helpers to create the service directory layout and populate
-it with run scripts. It has support fcgi and mongrel listeners, and tries to
+it with run scripts. It has support fcgi, mongrel and merb listeners, and tries to
 make it easy to add other services in your deploy.rb.
 
 == Status
 
-capistrano-runit-tests 0.2.3 (known as cappy-runit from now on) is the third
-release of the library. It will need more work to be useful to everybody who
-uses runit. It supports both the sv and runsvctrl/runsvstat versions of runit.
-Support for daemontools svc command will be added at a later date.
-
-The current version is based around a runit setup similar to the one created
-in http://www.defendem.com/read/chapter/5#page6, i.e. a supervised directory
-where links can be created to get tasks monitored. If your runit setup is
-different, read below for the variables you can set in your deploy.rb to
-handle this and let me know if there is something these can't handle.
+capistrano-runit-tests 0.3.0 (known as cappy-runit from now on) is the third
+release of the library. It supports both the sv and runsvctrl/runsvstat versions of runit.
 
 == Quick Start
 
@@ -64,6 +56,10 @@ Then adds the following tasks, helpers and variables:
                           of the service directory in the app on the server(s).
                           (Default: service)
 
+[service_root]            Change this if you want to change the location
+                          of the service directory.
+                          (Default: Same as your deploy_to)
+
 [master_service_dir]      Supervised directory where cappy-runit will link the
                           service directories to to start the service.
                           (Default: ~/services)
@@ -83,9 +79,7 @@ Then adds the following tasks, helpers and variables:
 [runit_sudo_tasks]         Array of tasks names to run using sudo
                            (default: [])
 
-cappy-runit creates a directory for each listener you ask for. At the moment
-the directories are created by setup_service_dirs. Later versions should allow
-for dynamic creation / deletion.
+cappy-runit creates a service directory for each listener you ask for. 
 
 The directories are named after the port number the listener will run on. If
 you specified 8500 for the base port and 3 for the listener_count then

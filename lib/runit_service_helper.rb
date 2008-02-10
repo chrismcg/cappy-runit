@@ -32,7 +32,7 @@ module RunitServiceHelper
   # Returns the full path to the service directory given a service name.
   # Doesn't check the service name is valid.
   def service_path(service_name)
-    "#{self.deploy_to}/#{self.service_dir}/#{service_name}"
+    "#{self.service_root}/#{self.service_dir}/#{service_name}"
   end
   
   protected

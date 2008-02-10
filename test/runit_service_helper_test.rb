@@ -7,6 +7,7 @@ class RunitRunnerServiceTest < Test::Unit::TestCase
       set :runner_template_path, File.join(File.dirname(__FILE__), 'templates')
       set :deploy_to, 'app_dir'
       set :service_dir, 'service'
+      set :service_root, variables[:deploy_to]
       set :runit_sudo_tasks, []
     end
   end

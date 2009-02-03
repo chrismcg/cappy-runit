@@ -60,26 +60,5 @@ Capistrano::Configuration.instance(:must_exist).load do
       each_listener { |port| dirs << "#{service_root}/#{service_dir}/#{port}" }
       dirs
     end
-
-    ## DEPRECATED - and alias_method won't work inside the instance_eval this is run in
-    def each_fcgi_listener
-      each_listener { |listener_port| yield listener_port }
-    end
-
-    def fcgi_listener_dirs
-      listener_dirs
-    end
-
-    def handle_deprecated_vars
-      handle_deprecated_var :fcgi_listener_base_port, :listener_base_port
-      handle_deprecated_var :fcgi_count, :listener_count
-    end
-
-    def handle_deprecated_var(old_var, new_var)
-      if @variables.has_key?(old_var)
-        set new_var, @variables[old_var]
-      end
-      set old_var, @variables[new_var]
-    end
   end
 end

@@ -1,4 +1,4 @@
-*SVN* 
+*HEAD* 
 --------------------------------------------------
 * Add service_root variable, to allow the service dir to live outside the deployment tree. [jon@zomo.co.uk]
 
@@ -8,8 +8,7 @@
 * Added support for mongrel, and basic mongrel runner template
 
 * Changed fcgi_port and fcgi_listener_base_port to listener_port and
-  listener_base_port. Old variable names still supported but considered
-  deprecated.
+  listener_base_port. Old variable names not supported
 
 *0.2.0* (March 23rd 2006)
 --------------------------------------------------

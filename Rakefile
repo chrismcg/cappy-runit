@@ -7,7 +7,7 @@ CAPPY_RUNIT_VERSION = "0.2.3"
 Hoe.new("capistrano-runit-tasks", CAPPY_RUNIT_VERSION) do |p|
   p.rubyforge_name = 'cappy-runit'
   p.author         = "Chris McGrath"
-  p.changes        = p.paragraphs_of('ChangeLog', 1..3).join("\n")
+  p.changes        = p.paragraphs_of('History.txt', 1..3).join("\n")
   p.summary        = p.paragraphs_of('README.txt', 1)[0]
   p.description    = p.paragraphs_of('README.txt', 2)[0]
   p.email          = 'chris@octopod.info'

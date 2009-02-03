@@ -27,7 +27,7 @@ class RunitHelperTest < Test::Unit::TestCase
   end
   
   def test_should_sudo_command
-    @config.expects(:sudo).with("sudo")
+    @config.expects(:try_sudo).with("sudo")
     @config.send :sudo_task
   end
 end

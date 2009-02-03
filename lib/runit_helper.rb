@@ -10,7 +10,7 @@ end
 module RunitHelper
   def run_or_sudo(command)
     if self.current_task && self.runit_sudo_tasks.include?(self.current_task.name)
-      sudo command
+      try_sudo command
     else
       run command
     end

@@ -3,7 +3,7 @@
 * Add service_root variable, to allow the service dir to live outside the deployment tree. [jon@zomo.co.uk]
 
 * Add runit_sudo_tasks variable, array of symbols indicating tasks names to be
-  run using sudo.
+  run using try_sudo.
 
 * Added support for mongrel, and basic mongrel runner template
 

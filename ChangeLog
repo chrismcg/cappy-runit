@@ -1,4 +1,9 @@
-*SVN* 
+*0.2.4* (July 14th 2010)
+--------------------------------------------------
+
+* Backport service_root patch
+
+*0.2.3* (November 20th 2006)
 --------------------------------------------------
 
 * Add runit_sudo_tasks variable, array of symbols indicating tasks names to be

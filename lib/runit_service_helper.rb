@@ -32,13 +32,15 @@ module RunitServiceHelper
   # Returns the full path to the service directory given a service name.
   # Doesn't check the service name is valid.
   def service_dir(service_name)
-    "#{configuration.deploy_to}/#{configuration.service_dir}/#{service_name}"
+    "#{configuration.service_root}/#{configuration.service_dir}/#{service_name}"
   end
   
   protected
   def create_service(service_name, options)
+    template_base = options[:common_template] ? options[:common_template] : service_name.to_s
+    options.delete(:shared_template)
     if options[:template].nil?
-      runner_template_path = options[:log_runner] ? "#{service_name.to_s}_log_runner" : "#{service_name.to_s}_runner"        
+      runner_template_path = options[:log_runner] ? "#{template_base}_log_runner" : "#{template_base}_runner"        
       runner_template = runner.get_template(runner_template_path)
       if runner_template == runner_template_path # didn't find a template
         if options[:log_runner]

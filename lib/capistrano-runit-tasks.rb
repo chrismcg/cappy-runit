@@ -4,11 +4,12 @@ require 'runit_runner_helper'
 require 'runit_command_helper'
 require 'runit_service_helper'
 
-Capistrano.configuration(:must_exist).load do
+Capistrano.configuration(:must_exist).load do |conf|
   set :service_dir, 'service'
   set :listener_count, 1
   set :listener_type, :mongrel
   set :master_service_dir, '~/service'
+  set :service_root, conf[:deploy_to]
   set :listener_base_port, 9000
   set :sv_command, :sv # can be :sv or :runsvctrl
   set :runner_template_path, File.join('templates', 'runit')
@@ -31,7 +32,7 @@ Capistrano.configuration(:must_exist).load do
   desc "Sets up services directories for supervising listeners using runit"
   task :setup_service_dirs do
     handle_deprecated_vars
-    application_service_dir = "#{deploy_to}/#{service_dir}"
+    application_service_dir = "#{service_root}/#{service_dir}"
     runit_helper.run_or_sudo "mkdir -p #{application_service_dir}"
         
     each_listener do |listener_port|
@@ -44,8 +45,8 @@ Capistrano.configuration(:must_exist).load do
   task :spinner do
     handle_deprecated_vars
     each_listener do |listener_port|
-      service_dir = "#{deploy_to}/#{service_dir}/#{listener_port}"
-      runit_helper.run_or_sudo "ln -sf #{service_dir} #{master_service_dir}/#{application}-#{listener_port}"    
+      service_dir = "#{service_root}/#{service_dir}/#{fcgi_listener_port}"
+     runit_helper.run_or_sudo "ln -sf #{service_dir} #{master_service_dir}/#{application}-#{listener_port}"    
     end
   end
   
@@ -69,7 +70,7 @@ Capistrano.configuration(:must_exist).load do
   
   def listener_dirs
     dirs = []
-    each_listener { |port| dirs << "#{deploy_to}/#{service_dir}/#{port}" }
+    each_listener { |port| dirs << "#{service_root}/#{service_dir}/#{port}" }
     dirs
   end
   

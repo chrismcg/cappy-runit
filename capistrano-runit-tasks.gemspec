@@ -2,7 +2,7 @@
 lib = File.expand_path('../lib/', __FILE__)
 $:.unshift lib unless $:.include?(lib)
 
-CAPPY_RUNIT_VERSION = "1.0.0"
+CAPPY_RUNIT_VERSION = "1.0.0.pre1"
 
 Gem::Specification.new do |s|
   s.name        = "capistrano-runit-tasks"

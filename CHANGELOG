@@ -1,4 +1,10 @@
-*HEAD* 
+*1.0.0.pre2* (August 3rd 2010)
+--------------------------------------------------
+* Rename task to avoid deprecation warning [jon@zomo.co.uk]
+
+* Remove calls to handle_deprecated_vars [jon@zomo.co.uk]
+
+*1.0.0.pre1* (July 11th 2010)
 --------------------------------------------------
 * Add service_root variable, to allow the service dir to live outside the deployment tree. [jon@zomo.co.uk]
 

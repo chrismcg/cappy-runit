@@ -1,5 +1,7 @@
 *1.0.0.pre2* (August 3rd 2010)
 --------------------------------------------------
+* Add dependencies to gemspec and a Gemfile that reads the gemspec
+
 * Rename task to avoid deprecation warning [jon@zomo.co.uk]
 
 * Remove calls to handle_deprecated_vars [jon@zomo.co.uk]

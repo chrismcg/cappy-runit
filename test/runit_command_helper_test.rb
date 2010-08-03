@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.expand_path('../test_helper', __FILE__)
 
 class RunitCommandHelperTest < Test::Unit::TestCase
   SIGNALS = %w(up down once pause cont hup alarm interrupt quit usr1 usr2 term kill)

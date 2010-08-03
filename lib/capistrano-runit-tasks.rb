@@ -41,9 +41,10 @@ Capistrano::Configuration.instance(:must_exist).load do
     end
 
     desc "Hook into after setup to create the runit service directory"
-    task :after_setup do
+    task :post_setup do
       setup_service_dirs
     end
+    after :setup, "deploy:post_setup"
 
     def each_listener
       listener_base_port.upto(listener_base_port + listener_count - 1) do |listener_port|

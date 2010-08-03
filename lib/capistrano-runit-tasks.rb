@@ -18,7 +18,6 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :deploy do
     desc "Sets up services directories for supervising listeners using runit"
     task :setup_service_dirs do
-      handle_deprecated_vars
       application_service_dir = "#{service_root}/#{service_dir}"
       runit_helper.run_or_sudo "mkdir -p #{application_service_dir}"
 
@@ -30,7 +29,6 @@ Capistrano::Configuration.instance(:must_exist).load do
 
     desc "Links created service dir into master service dir so runit starts the listeners"
     task :start, :roles => :app do
-      handle_deprecated_vars
       each_listener do |listener_port|
         service_dir = "#{service_root}/#{service_dir}/#{listener_port}"
         runit_helper.run_or_sudo "ln -nsf #{service_dir} #{master_service_dir}/#{application}-#{listener_port}"    
@@ -39,13 +37,11 @@ Capistrano::Configuration.instance(:must_exist).load do
 
     desc "restart task for runit supervised listeners"
     task :restart, :roles => :app do
-      handle_deprecated_vars
       sv.usr2 listener_dirs      
     end
 
     desc "Hook into after setup to create the runit service directory"
     task :after_setup do
-      handle_deprecated_vars
       setup_service_dirs
     end
 

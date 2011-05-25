@@ -47,8 +47,11 @@ Capistrano::Configuration.instance(:must_exist).load do
     after :setup, "deploy:post_setup"
 
     def each_listener
-      listener_base_port.upto(listener_base_port + listener_count - 1) do |listener_port|
-        yield listener_port
+      name = listener_base_port
+      yield name
+      (listener_count - 1).times do
+        name = name.succ
+        yield name
       end
     end
 

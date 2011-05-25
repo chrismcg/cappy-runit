@@ -67,7 +67,9 @@ Then adds the following tasks, helpers and variables:
 [listener_count]          Number of listener service dirs to create.
                           (Default: 1) (old name: fcgi_count)
 
-[listener_base_port]      The base port number to use for the listeners.
+[listener_base_port]      The name to use for the service dir. This will be
+                          incremented using .succ when there is more than 
+                          one listener.
                           (Default: 9000) (old name: fcgi_listener_base_port)
 
 [sv_command]               Either :sv or :runsvctrl

@@ -1,3 +1,7 @@
+*1.0.0.pre3* (May 25th 2011)
+--------------------------------------------------
+* Support non numeric service directory names
+
 *1.0.0.pre2* (August 3rd 2010)
 --------------------------------------------------
 * Add dependencies to gemspec and a Gemfile that reads the gemspec
